@@ -1,11 +1,11 @@
 pico-8 cartridge // http://www.pico-8.com
-version 27
+version 29
 __lua__
 -- mopped
 -- thoughtless labs
 
 function _init()
-	life=5
+	character()
 end
 
 function _update()
@@ -15,32 +15,34 @@ end
 function _draw()
  cls(3)
 	drawgame()
-	move()
+	
 end
 
 function lifebar()	
-	for i=1,life do 
+	for i=1,mop.l do 
 		print("♥",20+6*i,2,8) 
 	end
 end
 
 function drawgame()
-	print("life: ",5,2,7)
-	lifebar() 
-	if btn(0) then
-		character()
-	end
+	move()
+	print("life: ",5,2,7) 
+	spr(1,mop.x,mop.y,4,4)
 end
 
 function move()
- if btn(1) then
- 	
+ if btnp(1) then
+ 	mop.x+=1
+ elseif btnp(0) then
+ 	mop.x-=1
  end
 end
 
 function character()
-	spr(0x1)
-	
+	mop={}
+	mop.x=10
+	mop.y=60
+	mop.l=5
 end
 __gfx__
 00000000000000000000000000000044400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
