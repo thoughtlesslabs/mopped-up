@@ -9,7 +9,7 @@ function _init()
 end
 
 function _update()
-	lifebar()
+	health()
 end
 
 function _draw()
@@ -18,30 +18,46 @@ function _draw()
 	
 end
 
-function lifebar()	
-	for i=1,mop.l do 
-		print("♥",20+6*i,2,8) 
+function health()
+	if mop.l<=0 then
+	mop.l=0
+	end
+	if btnp(4) then
+		mop.l-=1
+	end
+	if btnp(5) then
+		mop.l+=1
 	end
 end
 
 function drawgame()
 	move()
 	print("life: ",5,2,7) 
+	if mop.l<=0 then
+		print("game over")
+	else
+	for i=1,mop.l do 
+		print("♥",20+6*i,2,8) 
+	end
+	end
 	spr(1,mop.x,mop.y,4,4)
 end
 
 function move()
- if btnp(1) then
- 	mop.x+=1
- elseif btnp(0) then
- 	mop.x-=1
+ if btn(1) then
+ 	mop.dx=mop.dx/1.2
+ elseif btn(0) then
+ 	mop.dx=mop.dx/1.2
  end
+ mop.x+=mop.dx
 end
 
 function character()
 	mop={}
 	mop.x=10
 	mop.y=60
+	mop.dx=0
+	mop.dy=0
 	mop.l=5
 end
 __gfx__
